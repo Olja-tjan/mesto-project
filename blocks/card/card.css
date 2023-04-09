@@ -1,0 +1,8 @@
+.card {
+  background-color: #fff;
+  display: grid;
+  grid-template-columns: 1fr 62px;
+  grid-template-rows: 1fr min-content;
+  overflow: hidden;
+  border-radius: 10px;
+}
