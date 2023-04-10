@@ -1,4 +1,9 @@
 .profile__info {
   max-width: 336px;
   padding-left: 30px;
+  display: grid;
+  grid-template-columns: max-content min-content;
+  column-gap: 18px;
+  row-gap: 9px;
+  align-items: baseline;
 }

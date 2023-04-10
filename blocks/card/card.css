@@ -2,7 +2,7 @@
   background-color: #fff;
   display: grid;
   grid-template-columns: 1fr 62px;
-  grid-template-rows: 1fr min-content;
+  grid-template-rows: 1fr 79px;
   overflow: hidden;
   border-radius: 10px;
 }

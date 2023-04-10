@@ -1,12 +1,14 @@
 .page {
   max-width: 880px;
+  margin: 0px auto;
   background-color: #000;
   color: #fff;
   font-family: 'Inter', 'Arial', sans-serif;
-  margin: 0px auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-
+/*
 * {
   outline: red solid 1px;
-}
+} */
