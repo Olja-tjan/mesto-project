@@ -8,7 +8,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*
-* {
-  outline: red solid 1px;
-} */
+
+@media screen and (max-width: 917px) {
+  .page {
+    /* ограничени ширины контента страницы при резрешении: от 619px */
+    max-width: 619px;
+  }
+}
+
+
+@media screen and (max-width: 618px) {
+  .page {
+    /* ограничени ширины контента страницы при резрешении: от 320px */
+    width: 320px;
+  }
+}
+

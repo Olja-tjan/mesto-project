@@ -7,3 +7,17 @@
   margin: 0px;
   padding: 0px;
 }
+
+
+@media screen and (max-width: 918px) {
+  .cards__links {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+@media screen and (max-width: 619px) {
+  .cards__links {
+    grid-template-columns: 1fr;
+  }
+}

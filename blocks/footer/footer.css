@@ -2,3 +2,19 @@
   padding: 0;
   padding-bottom: 60px;
 }
+
+
+@media screen and (max-width: 917px) {
+  .footer {
+    margin: 0 auto;
+    max-width: 581px;
+  }
+}
+
+
+@media screen and (max-width: 618px) {
+  .footer {
+    max-width: 282px;
+    padding-bottom: 36px;
+  }
+}
