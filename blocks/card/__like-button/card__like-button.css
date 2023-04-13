@@ -8,4 +8,10 @@
   background-image: url(../../../images/like.svg);
   background-size: cover;
   border-style: none;
+  transition: opacity 0.5s ease-out;
+}
+
+/* анимация при наведении курсора */
+.card__like-button:hover {
+  opacity: 0.6;
 }

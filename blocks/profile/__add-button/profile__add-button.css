@@ -5,6 +5,12 @@
   background-color: transparent;
   border: 2px solid #FFFFFF;
   justify-self: end;
+  transition: opacity 0.5s ease-out;
+}
+
+/* анимация при наведении курсора */
+.profile__add-button:hover {
+  opacity: 0.6;
 }
 
 

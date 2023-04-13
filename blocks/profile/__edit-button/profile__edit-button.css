@@ -4,6 +4,12 @@
   height: 24px;
   background-color: transparent;
   border: 1px solid #FFFFFF;
+  transition: opacity 0.5s ease-out;
+}
+
+/* анимация при наведении курсора */
+.profile__edit-button:hover {
+  opacity: 0.6;
 }
 
 
