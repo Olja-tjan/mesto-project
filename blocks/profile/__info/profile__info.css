@@ -12,7 +12,7 @@
 @media screen and (max-width: 917px) {
   .profile__info {
     justify-self: center;
-    padding: 22px 0 36px 42px;
+    padding: 25px 0 34px;
     justify-content: center;
   }
 }
@@ -20,9 +20,8 @@
 
 @media screen and (max-width: 618px) {
   .profile__info {
-    padding-left: 28px;
+    grid-template-columns: 235px 37px;
     column-gap: 10px;
-    row-gap: 14px;
+    row-gap: 8px;
   }
 }
-

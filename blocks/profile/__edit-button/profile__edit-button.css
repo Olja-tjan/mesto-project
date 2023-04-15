@@ -4,6 +4,7 @@
   height: 24px;
   background-color: transparent;
   border: 1px solid #FFFFFF;
+  cursor: pointer;
   transition: opacity 0.5s ease-out;
 }
 

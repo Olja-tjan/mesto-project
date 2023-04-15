@@ -9,14 +9,14 @@
 }
 
 
-@media screen and (max-width: 918px) {
+@media screen and (max-width: 917px) {
   .cards__links {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 
-@media screen and (max-width: 619px) {
+@media screen and (max-width: 618px) {
   .cards__links {
     grid-template-columns: 1fr;
   }
