@@ -74,19 +74,33 @@
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__container-form" action="URL" method="post" name="form-edit-profile">
         <input class="popup__input" type="text" name="name" id="name" placeholder="Жак-Ив Кусто" value="" required>
-        <input class="popup__input" type="text" name="description" id="description" placeholder="Исследователь океана" value="" required>
+        <input class="popup__input" type="text" name="description" id="description" placeholder="Исследователь океана"
+          value="" required>
         <button class="popup__button-save" type="submit">Сохранить</button>
       </form>
     </div>
   </div>
 
-      <template id="card-template">
-        <li class="card">
-          <img class="card__image" src="" alt="">
-          <h2 class="card__caption"></h2>
-          <button class="card__like-button" type="button"></button>
-        </li>
-      </template>
+  <div class="popup">
+    <div class="popup__container">
+      <button class="popup__button-close" type="button" aria-label="закрыть"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__container-form" action="URL" method="post" name="form-create-card">
+        <input class="popup__input" type="text" name="image-name" id="image-name" placeholder="Название" value="" required>
+        <input class="popup__input" type="text" name="image-link" id="image-link" placeholder="Ссылка на картинку"
+          value="" required>
+        <button class="popup__button-save" type="submit">Создать</button>
+      </form>
+    </div>
+  </div>
+
+  <template id="card-template">
+    <li class="card">
+      <img class="card__image" src="" alt="">
+      <h2 class="card__caption"></h2>
+      <button class="card__like-button" type="button"></button>
+    </li>
+  </template>
   <script src="script.js"></script>
 
 </body>

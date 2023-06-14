@@ -1,27 +1,24 @@
 // Работа модальных окон
 
-const popup = document.querySelector('.popup');
+const popups = document.querySelectorAll('.popup');
 const buttonProfile = document.querySelector('.profile__edit-button');
-const buttonClose = document.querySelector('.popup__button-close');
+const buttonCreate = document.querySelector('.profile__add-button');
+const buttonClose = document.querySelectorAll('.popup__button-close');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const formElement = document.querySelector('.popup__container-form');
 const nameInput = document.querySelector('#name');
 const jobInput = document.querySelector('#description');
 
-function openedPopup () {
-  popup.classList.add('popup_opened');
+function openedPopup(index) {
+  popups[index].classList.add("popup_opened");
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
 };
 
-
-
-function closePopup () {
-  popup.classList.remove('popup_opened');
+function closePopup(index) {
+  popups[index].classList.remove('popup_opened');
 };
-
-
 
 function handleFormSubmit(evt) {
   evt.preventDefault();
@@ -33,8 +30,10 @@ function handleFormSubmit(evt) {
   profileDescription.textContent = jobInput.value;
 };
 
-buttonProfile.addEventListener('click', openedPopup);
-buttonClose.addEventListener('click', closePopup);
+buttonProfile.addEventListener('click', ()=> openedPopup(0));
+buttonCreate.addEventListener('click', ()=> openedPopup(1));
+buttonClose[0].addEventListener('click', ()=> closePopup(0));
+buttonClose[1].addEventListener('click', ()=> closePopup(1));
 formElement.addEventListener('submit', handleFormSubmit);
 
 // Добавление шести карточек
@@ -71,7 +70,6 @@ const initialCards = [
     alt: 'Высокая скала являющаяся берегом замёрзшего озера байкал на фоне голубого неба'
   }
 ];
-
 const cardTemplate = document.querySelector('#card-template').content;
 const cardsLinks = document.querySelector('.cards__links');
 
@@ -84,3 +82,6 @@ initialCards.forEach(function (element) {
 
   cardsLinks.append(cardElement)
 });
+
+// Форма добавления карточки
+
