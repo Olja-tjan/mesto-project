@@ -1,5 +1,3 @@
-// Работа модальных окон
-
 const popups = document.querySelectorAll('.popup');
 const buttonProfile = document.querySelector('.profile__edit-button');
 const buttonCreate = document.querySelector('.profile__add-button');
@@ -9,35 +7,11 @@ const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const nameInput = document.querySelector('#name');
 const jobInput = document.querySelector('#description');
-
-function openedPopup(index) {
-  popups[index].classList.add("popup_opened");
-
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileDescription.textContent;
-};
-
-function closePopup(index) {
-  popups[index].classList.remove('popup_opened');
-};
-
-function handleFormSubmit(evt) {
-  evt.preventDefault();
-
-  profileName.textContent = nameInput.value;
-  profileDescription.textContent = jobInput.value;
-
-  closePopup(0);
-};
-
-buttonProfile.addEventListener('click', ()=> openedPopup(0));
-buttonCreate.addEventListener('click', ()=> openedPopup(1));
-buttonClose[0].addEventListener('click', ()=> closePopup(0));
-buttonClose[1].addEventListener('click', ()=> closePopup(1));
-formElement[0].addEventListener('submit', handleFormSubmit);
-
-// Добавление шести карточек
-
+const imgNameInput = document.querySelector('#image-name');
+const imgLinkInput = document.querySelector('#image-link');
+const cardTemplate = document.querySelector('#card-template').content;
+const cardsLinks = document.querySelector('.cards__links');
+let buttonsLike = document.querySelectorAll('.card__like-button');
 const initialCards = [
   {
     name: 'Архыз',
@@ -70,8 +44,46 @@ const initialCards = [
     alt: 'Высокая скала являющаяся берегом замёрзшего озера байкал на фоне голубого неба'
   }
 ];
-const cardTemplate = document.querySelector('#card-template').content;
-const cardsLinks = document.querySelector('.cards__links');
+
+// Работа модальных окон:
+
+function openedPopup(index) {
+  popups[index].classList.add("popup_opened");
+
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileDescription.textContent;
+};
+
+function closePopup(index) {
+  popups[index].classList.remove('popup_opened');
+};
+
+function handleFormSubmit(evt) {
+  evt.preventDefault();
+
+  profileName.textContent = nameInput.value;
+  profileDescription.textContent = jobInput.value;
+
+  closePopup(0);
+};
+
+buttonProfile.addEventListener('click', ()=> openedPopup(0));
+buttonCreate.addEventListener('click', ()=> openedPopup(1));
+buttonClose[0].addEventListener('click', ()=> closePopup(0));
+buttonClose[1].addEventListener('click', ()=> closePopup(1));
+formElement[0].addEventListener('submit', handleFormSubmit);
+
+// Лайк карточки:
+
+function likeCard(evt) {
+  evt.target.classList.toggle('card__like-button_active');
+ };
+
+buttonsLike.forEach((function (item) {
+  item.addEventListener('click', likeCard);
+}));
+
+// Добавление шести карточек:
 
 initialCards.forEach(function (element) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
@@ -81,13 +93,15 @@ initialCards.forEach(function (element) {
   cardElement.querySelector('.card__image').alt = element.alt;
 
   cardsLinks.append(cardElement);
+
+  let buttonsLike = document.querySelectorAll('.card__like-button');
+
+  buttonsLike.forEach((function (item) {
+    item.addEventListener('click', likeCard);
+  }));
 });
 
-// Форма добавления карточки
-
-const imgNameInput = document.querySelector('#image-name');
-const imgLinkInput = document.querySelector('#image-link');
-
+// Форма добавления карточки:
 
 function handleFormSubmit2(evt) {
   evt.preventDefault();
@@ -100,7 +114,17 @@ function handleFormSubmit2(evt) {
 
   cardsLinks.prepend(cardElement);
 
+  let buttonsLike = document.querySelectorAll('.card__like-button');
+
+  buttonsLike.forEach((function (item) {
+    item.addEventListener('click', likeCard);
+  }));
+
   closePopup(1);
 };
 
 formElement[1].addEventListener('submit', handleFormSubmit2);
+
+// Удаление карточки:
+
+
