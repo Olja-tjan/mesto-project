@@ -11,7 +11,7 @@ const imgNameInput = document.querySelector('#image-name');
 const imgLinkInput = document.querySelector('#image-link');
 const cardTemplate = document.querySelector('#card-template').content;
 const cardsLinks = document.querySelector('.cards__links');
-let buttonsLike = document.querySelectorAll('.card__like-button');
+const buttonsLike = document.querySelectorAll('.card__like-button');
 const initialCards = [
   {
     name: 'Архыз',
@@ -94,7 +94,7 @@ initialCards.forEach(function (element) {
 
   cardsLinks.append(cardElement);
 
-  let buttonsLike = document.querySelectorAll('.card__like-button');
+  const buttonsLike = document.querySelectorAll('.card__like-button');
 
   buttonsLike.forEach((function (item) {
     item.addEventListener('click', likeCard);
@@ -114,11 +114,16 @@ function handleFormSubmit2(evt) {
 
   cardsLinks.prepend(cardElement);
 
-  let buttonsLike = document.querySelectorAll('.card__like-button');
+  const buttonsLike = document.querySelectorAll('.card__like-button');
 
   buttonsLike.forEach((function (item) {
     item.addEventListener('click', likeCard);
   }));
+
+
+  const buttonTrash = document.querySelectorAll('.card__trash-button');
+
+  buttonTrash.forEach(deletedCard);
 
   closePopup(1);
 };
@@ -127,4 +132,13 @@ formElement[1].addEventListener('submit', handleFormSubmit2);
 
 // Удаление карточки:
 
+const buttonTrash = document.querySelectorAll('.card__trash-button');
 
+const deletedCard = btn => {
+	btn.addEventListener('click', () => {
+		const cardItem = btn.closest('.card');
+		cardItem.parentNode.removeChild(cardItem);
+	});
+};
+
+buttonTrash.forEach(deletedCard);
