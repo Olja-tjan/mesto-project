@@ -1,0 +1,23 @@
+{
+  "name": "yandex.praktikum",
+  "version": "0.0.1",
+  "description": "___\r ##Описание проекта и его функциональности:",
+  "main": "constants.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olja-tjan/mesto-project.git"
+  },
+  "author": "Olga Bulgakova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Olja-tjan/mesto-project/issues"
+  },
+  "homepage": "https://github.com/Olja-tjan/mesto-project#readme",
+  "dependencies": {
+    "jquery": "^3.7.0"
+  },
+  "devDependencies": {}
+}
