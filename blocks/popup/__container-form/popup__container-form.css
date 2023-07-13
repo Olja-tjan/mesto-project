@@ -1,5 +1,4 @@
 .popup__container-form {
   display: grid;
-  grid-template-rows: 1fr 1fr min-content;
-  gap: 30px;
+  grid-template-rows: 1fr minmax(35px, min-content) 1fr minmax(35px, min-content) min-content;
 }
