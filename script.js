@@ -23,10 +23,14 @@ let caption = cardZoomPopup.querySelector('.popup__caption');
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  popup.addEventListener('click', closePopupOverlay);
+  document.addEventListener('keydown', closePopupEsc);
 };
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  popup.removeEventListener('click', closePopupOverlay);
+  document.removeEventListener('keydown', closePopupEsc);
 };
 
 // Отправка формы:
@@ -127,9 +131,7 @@ cardZoomButtonClose.addEventListener('click', () => {
 profileEditForm.addEventListener('submit', handleFormSubmitProfileEdit);
 cardAddForm.addEventListener('submit', handleFormSubmitCardCreate);
 
-
 // Валидация форм
-
 
 const showInputError = (formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -159,27 +161,21 @@ const checkInputValidity = (formElement, inputElement) => {
   }
 };
 
-
-
-// Функция принимает массив полей
-
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   })
 };
 
-// Функция принимает массив полей ввода
-// и элемент кнопки, состояние которой нужно менять
-
 const toggleButtonState = (inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
+    buttonElement.disabled = true;
     buttonElement.classList.add('popup__button-save_inactive');
   } else {
+    buttonElement.disabled = false;
     buttonElement.classList.remove('popup__button-save_inactive');
   }
 };
-
 
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
@@ -196,7 +192,6 @@ const setEventListeners = (formElement) => {
   });
 };
 
-
 const enableValidation = () => {
   const formList = Array.from(document.querySelectorAll('.popup__container-form'));
 
@@ -209,3 +204,20 @@ const enableValidation = () => {
 };
 
 enableValidation();
+
+// Закрытие popup нажатием на оверлей
+
+function closePopupOverlay(evt) {
+  if (evt.currentTarget === evt.target) {
+    closePopup(evt.currentTarget);
+  }
+};
+
+// Закрытие popup нажатием на Esc
+
+function closePopupEsc(evt) {
+  if (evt.key === 'Escape') {
+    const popupOpened = document.querySelector('.popup_opened')
+    closePopup(popupOpened);
+  }
+};
