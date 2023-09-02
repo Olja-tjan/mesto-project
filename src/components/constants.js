@@ -1,5 +1,12 @@
 export { initialCards };
 
+import karachaevoCherkesyja from '../images/karachaevo-cherkesyja.jpg';
+import elbrus from '../images/elbrus.jpg';
+import dombai from '../images/dombai.jpg';
+import toskana from '../images/Toskana.jpg';
+import alps from '../images/alps.jpg';
+import hallstatt from '../images/n.jpg';
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -33,32 +40,32 @@ const initialCards = [
   },
   {
     name: 'Карачаево-Черкесия',
-    link: './images/karachaevo-cherkesyja.jpg',
+    link: karachaevoCherkesyja,
     alt: 'Заброшенный Сентинский храм'
   },
   {
     name: 'Гора Эльбрус',
-    link: './images/elbrus.jpg',
+    link: elbrus,
     alt: 'Вид издали на гору Эльбрус'
   },
   {
     name: 'Домбай',
-    link: './images/dombai.jpg',
+    link: dombai,
     alt: 'Вид на вершину Белалакия, через горный лес'
   },
   {
     name: 'Тоскана',
-    link: './images/Toskana.jpg',
+    link: toskana,
     alt: 'Дом на вершине зелённого холма, в лучах закатного солнца'
   },
   {
     name: 'Альпы',
-    link: './images/alps.jpg',
+    link: alps,
     alt: 'Дом на фоне горного хребта'
   },
   {
     name: 'Гальштат Австрия',
-    link: './images/n.jpg',
+    link: hallstatt,
     alt: 'Вид на крыши и горы в Австрийской деревне'
   }
 ];

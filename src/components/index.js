@@ -1,3 +1,4 @@
+import '../styles/index.css';
 import { initialCards } from './constants';
 import { setEventListeners } from './validate';
 import { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup } from './modal';
@@ -70,7 +71,7 @@ enableValidation();
 
 // Добавление слушателей:
 
-// Кнопки открытия форм:
+// Кнопок открытия форм:
 
 profileEditButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
