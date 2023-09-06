@@ -1,21 +1,19 @@
-export { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup, openedPopupImage };
+export { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup, openedPopupImage, closePopupOverlay };
 
 const cardZoomPopup = document.querySelector('.popup_card-zoom');
 const cardZoomButtonClose = cardZoomPopup.querySelector('.popup__button-close');
-let img = cardZoomPopup.querySelector('.popup__image');
-let caption = cardZoomPopup.querySelector('.popup__caption');
+const img = cardZoomPopup.querySelector('.popup__image');
+const caption = cardZoomPopup.querySelector('.popup__caption');
 
 // Работа модальных окон:
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  popup.addEventListener('click', closePopupOverlay);
   document.addEventListener('keydown', closePopupEsc);
 };
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  popup.removeEventListener('click', closePopupOverlay);
   document.removeEventListener('keydown', closePopupEsc);
 };
 

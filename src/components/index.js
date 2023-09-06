@@ -1,7 +1,7 @@
 import '../styles/index.css';
 import { initialCards } from './constants';
-import { setEventListeners } from './validate';
-import { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup } from './modal';
+import { selectors, hideInputError, enableValidation } from './validate';
+import { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup, closePopupOverlay } from './modal';
 import { createCard, addCard } from './card';
 
 const profileEditPopup = document.querySelector('.popup_profile-edit');
@@ -52,22 +52,8 @@ function handleFormSubmitCardCreate(evt) {
   const card = createCard(txtInput, imgInput, txtInput);
   addCard(card);
   closePopup(cardAddPopup);
+  evt.target.reset();
 };
-
-// Валидация форм:
-
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__container-form'));
-
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-    setEventListeners(formElement);
-  });
-};
-
-enableValidation();
 
 // Добавление слушателей:
 
@@ -76,9 +62,11 @@ enableValidation();
 profileEditButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
-  openPopup(profileEditPopup)
+  enableValidation(selectors);
+  openPopup(profileEditPopup);
 });
 cardAddButton.addEventListener('click', () => {
+  enableValidation(selectors);
   openPopup(cardAddPopup);
 });
 
@@ -93,6 +81,12 @@ cardAddButtonClose.addEventListener('click', () => {
 cardZoomButtonClose.addEventListener('click', () => {
   closePopup(cardZoomPopup);
 });
+
+// Закрытия форм нажатием на овелэй:
+
+profileEditPopup.addEventListener('click', closePopupOverlay);
+cardAddPopup.addEventListener('click', closePopupOverlay);
+cardZoomPopup.addEventListener('click', closePopupOverlay);
 
 // Отправка форм:
 
