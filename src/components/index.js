@@ -1,6 +1,6 @@
 import '../styles/index.css';
 import { initialCards } from './constants';
-import { selectors, hideInputError, enableValidation } from './validate';
+import { selectors, hideInputError, toggleButtonState, enableValidation } from './validate';
 import { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup, closePopupOverlay } from './modal';
 import { createCard, addCard } from './card';
 
@@ -19,6 +19,17 @@ const jobInput = document.querySelector('#description');
 const imgNameInput = document.querySelector('#image-name');
 const imgLinkInput = document.querySelector('#image-link');
 
+// function resetForm(form) {
+//   form.reset();
+// };
+// hideInputError(formElement, inputElement, rest
+// hideInputError(profileEditForm, inputElement, selectors);
+
+// toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+// toggleButtonState([imgNameInput, imgLinkInput], evt, selectors); карточки
+// toggleButtonState([nameInput, jobInput], evt, selectors); профиль
+
+
 // Отправка формы профиля:
 
 function handleFormSubmitProfileEdit(evt) {
@@ -28,6 +39,10 @@ function handleFormSubmitProfileEdit(evt) {
   profileDescription.textContent = jobInput.value;
 
   closePopup(profileEditPopup);
+  const profileButtonSave = profileEditForm.querySelector('.popup__button-save');
+  const inputsProfile = [nameInput, jobInput];
+  console.log(inputsProfile);
+  toggleButtonState(inputsProfile, profileButtonSave, selectors);
 };
 
 // Добавление шести карточек:
@@ -53,7 +68,15 @@ function handleFormSubmitCardCreate(evt) {
   addCard(card);
   closePopup(cardAddPopup);
   evt.target.reset();
+  const cardButtonSave = cardAddForm.querySelector('.popup__button-save');
+  const inputs = [imgNameInput, imgLinkInput];
+  console.log(inputs);
+  toggleButtonState(inputs, cardButtonSave, selectors);
 };
+
+// Валидация форм:
+
+enableValidation(selectors);
 
 // Добавление слушателей:
 
@@ -62,11 +85,9 @@ function handleFormSubmitCardCreate(evt) {
 profileEditButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
-  enableValidation(selectors);
   openPopup(profileEditPopup);
 });
 cardAddButton.addEventListener('click', () => {
-  enableValidation(selectors);
   openPopup(cardAddPopup);
 });
 

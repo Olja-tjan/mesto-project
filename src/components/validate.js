@@ -1,4 +1,4 @@
-export { selectors, hideInputError, enableValidation };
+export { selectors, hideInputError, toggleButtonState, enableValidation };
 
 const selectors = {
   inputErrorClass: 'popup__input_error',
@@ -57,7 +57,7 @@ const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
 const setEventListeners = (formElement, {inputSelector, submitButtonSelector, inactiveButtonClass, ...rest}) => {
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   const buttonElement = formElement.querySelector(submitButtonSelector);
-
+  console.log(inputList);
   toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 
   inputList.forEach((inputElement) => {
