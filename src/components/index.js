@@ -1,66 +1,82 @@
 import '../styles/index.css';
-import { initialCards } from './constants';
 import { selectors, toggleButtonState, enableValidation } from './validate';
 import { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup, closePopupOverlay } from './modal';
-import { createCard, addCard } from './card';
+import { profileName, profileDescription, profileAvatar, editProfile, editAva, postCard } from './api';
 
 const profileEditPopup = document.querySelector('.popup_profile-edit');
 const cardAddPopup = document.querySelector('.popup_card-add');
+const avaEditPopup = document.querySelector('.popup_ava-edit');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const cardAddButton = document.querySelector('.profile__add-button');
 const profileEditButtonClose = profileEditPopup.querySelector('.popup__button-close');
 const cardAddButtonClose = cardAddPopup.querySelector('.popup__button-close');
+const avaEditButtonClose = avaEditPopup.querySelector('.popup__button-close');
 const profileEditForm = profileEditPopup.querySelector('.popup__container-form');
 const cardAddForm = cardAddPopup.querySelector('.popup__container-form');
-const profileName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
+const avaEditForm = avaEditPopup.querySelector('.popup__container-form');
 const nameInput = document.querySelector('#name');
+const avaInput = document.querySelector('#image-link-ava');
 const jobInput = document.querySelector('#description');
 const imgNameInput = document.querySelector('#image-name');
 const imgLinkInput = document.querySelector('#image-link');
 const profileButtonSave = profileEditForm.querySelector('.popup__button-save');
+const avaButtonSave = avaEditForm.querySelector('.popup__button-save');
 const cardButtonSave = cardAddForm.querySelector('.popup__button-save');
-const {inactiveButtonClass} = selectors;
+const { inactiveButtonClass } = selectors;
 
-// Отправка формы профиля:
+// Изменеие кнопок отправки данных:
+
+function notifySaving(btnSave) {
+  btnSave.textContent = 'Сохранение...';
+};
+function returnDefaultText(btnSave) {
+  btnSave.textContent = 'Сохранить';
+};
+function returnDefaultTextcardAdd(btnSave) {
+  btnSave.textContent = 'Создать';
+};
+
+// Отправка формы профиля
 
 function handleFormSubmitProfileEdit(evt) {
   evt.preventDefault();
 
-  profileName.textContent = nameInput.value;
-  profileDescription.textContent = jobInput.value;
-
+  notifySaving(profileButtonSave);
+  editProfile(profileName.textContent = nameInput.value, profileDescription.textContent = jobInput.value)
   closePopup(profileEditPopup);
+  returnDefaultText(profileButtonSave);
 };
 
-// Добавление шести карточек:
+// Отправка формы аватара
 
-initialCards.forEach(function (element) {
-  const txtEl = element.name;
-  const imgEl = element.link;
-  const altEl = element.alt;
+function handleFormSubmitAvaEdit(evt) {
+  evt.preventDefault();
 
-  const initialCard = createCard(txtEl, imgEl, altEl);
-  addCard(initialCard);
-});
+  notifySaving(avaButtonSave);
+  editAva(profileAvatar.src = avaInput.value)
+  closePopup(avaEditPopup);
+  returnDefaultText(avaButtonSave);
+};
 
-// Отправка формы карточки:
+// Отправка формы карточки
 
 function handleFormSubmitCardCreate(evt) {
   evt.preventDefault();
 
+  notifySaving(cardButtonSave);
   const txtInput = imgNameInput.value;
   const imgInput = imgLinkInput.value;
 
-  const card = createCard(txtInput, imgInput, txtInput);
-  addCard(card);
+  postCard(txtInput, imgInput, txtInput);
   closePopup(cardAddPopup);
+  returnDefaultTextcardAdd(cardButtonSave);
   evt.target.reset();
 };
 
-// Валидация форм:
+// Валидация форм
 
 enableValidation(selectors);
+
 
 // Добавление слушателей:
 
@@ -72,6 +88,10 @@ profileEditButton.addEventListener('click', () => {
   toggleButtonState([nameInput, jobInput], profileButtonSave, inactiveButtonClass);
   openPopup(profileEditPopup);
 });
+profileAvatar.addEventListener('click', () => {
+  toggleButtonState([avaInput], avaButtonSave, inactiveButtonClass);
+  openPopup(avaEditPopup);
+});
 cardAddButton.addEventListener('click', () => {
   toggleButtonState([imgNameInput, imgLinkInput], cardButtonSave, inactiveButtonClass);
   openPopup(cardAddPopup);
@@ -81,6 +101,9 @@ cardAddButton.addEventListener('click', () => {
 
 profileEditButtonClose.addEventListener('click', () => {
   closePopup(profileEditPopup);
+});
+avaEditButtonClose.addEventListener('click', () => {
+  closePopup(avaEditPopup);
 });
 cardAddButtonClose.addEventListener('click', () => {
   closePopup(cardAddPopup);
@@ -92,10 +115,12 @@ cardZoomButtonClose.addEventListener('click', () => {
 // Закрытия форм нажатием на овелэй:
 
 profileEditPopup.addEventListener('click', closePopupOverlay);
+avaEditPopup.addEventListener('click', closePopupOverlay);
 cardAddPopup.addEventListener('click', closePopupOverlay);
 cardZoomPopup.addEventListener('click', closePopupOverlay);
 
 // Отправка форм:
 
 profileEditForm.addEventListener('submit', handleFormSubmitProfileEdit);
+avaEditForm.addEventListener('submit', handleFormSubmitAvaEdit);
 cardAddForm.addEventListener('submit', handleFormSubmitCardCreate);

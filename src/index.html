@@ -16,7 +16,9 @@
   <main class="content">
 
     <section class="profile">
-      <img class="profile__avatar" src="<%=require('./images/ava.jpg')%>" alt="Аватар профиля">
+      <div class="profile__overlay" type="button" aria-label="редактировать профиль">
+        <img class="profile__avatar" src="<%=require('./images/ava.jpg')%>" alt="Аватар профиля">
+      </div>
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
         <button class="profile__edit-button" type="button" aria-label="редактировать профиль"></button>
@@ -54,6 +56,19 @@
     </div>
   </div>
 
+  <div class="popup popup_ava-edit">
+    <div class="popup__container popup__container_forms">
+      <button class="popup__button-close" type="button" aria-label="закрыть"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form class="popup__container-form popup__container-form_ava" action="URL" method="post" name="form-create-card" novalidate>
+        <input class="popup__input" type="url" name="image-link-ava" id="image-link-ava" placeholder="Ссылка на картинку"
+          value="" required>
+        <span class="popup__text-error image-link-ava-error"></span>
+        <button class="popup__button-save" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
   <div class="popup popup_card-add">
     <div class="popup__container popup__container_forms">
       <button class="popup__button-close" type="button" aria-label="закрыть"></button>
@@ -83,7 +98,10 @@
     <li class="card">
       <img class="card__image" src="" alt="">
       <h2 class="card__caption"></h2>
-      <button class="card__like-button" type="button"></button>
+      <div class="card__container-like">
+        <button class="card__like-button" type="button"></button>
+        <p class="card__likes">0</p>
+      </div>
       <button class="card__trash-button" type="button"></button>
     </li>
   </template>

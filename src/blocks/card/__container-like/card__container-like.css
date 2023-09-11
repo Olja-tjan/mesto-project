@@ -1,0 +1,6 @@
+.card__container-like {
+  padding: 22px 0;
+  display: grid;
+  grid-template-rows: min-content min-content;
+  gap: 3px;
+}

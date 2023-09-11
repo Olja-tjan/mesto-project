@@ -1,0 +1,6 @@
+.profile__overlay {
+  width: 120px;
+  height: 120px;
+  background: url(../../../images/ava-edit.svg) no-repeat center;
+}
+

@@ -3,7 +3,7 @@
   height: 19px;
   padding: 0px;
   justify-self: center;
-  align-self: center;
+  align-self: end;
   background-color: transparent;
   background-image: url(../../../images/like.svg);
   background-size: cover;

@@ -1,6 +1,14 @@
 .profile__avatar {
   max-width: 120px;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
+  cursor: pointer;
+  transition: opacity 0.5s ease-out;
+}
+
+/* анимация при наведении курсора */
+.profile__avatar:hover {
+  opacity: 0.2;
 }
 
 
