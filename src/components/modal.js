@@ -17,7 +17,7 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closePopupEsc);
 };
 
-// Закрытие модального окна нажатием на оверлей:
+// Закрытие модального окна нажатием на оверлей
 
 function closePopupOverlay(evt) {
   if (evt.currentTarget === evt.target) {
@@ -25,7 +25,7 @@ function closePopupOverlay(evt) {
   }
 };
 
-// Закрытие модального окна нажатием на Esc:
+// Закрытие модального окна нажатием на Esc
 
 function closePopupEsc(evt) {
   if (evt.key === 'Escape') {
@@ -34,7 +34,7 @@ function closePopupEsc(evt) {
   }
 };
 
-// Открытие модального окна с картинкой:
+// Открытие модального окна с картинкой
 
 function openedPopupImage(evt) {
   img.src = evt.currentTarget.src;
