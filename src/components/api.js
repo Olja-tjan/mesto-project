@@ -1,4 +1,4 @@
-import { data } from 'autoprefixer';
+import { checkingStatus } from './utils'
 export { userData, cardsData, editProfile, editAva, postCard, addLike, removeLike, removeCard };
 
 // Загрузка информации о пользователе с сервера
@@ -8,8 +8,8 @@ const userData =
     headers: {
       authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0'
     }
-  });
-
+  })
+  .then(checkingStatus);
 
 // Загрузка карточек с сервера
 
@@ -19,6 +19,7 @@ const cardsData =
       authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0'
     }
   })
+  .then(checkingStatus);
 
 // Редактирование профиля
 
@@ -34,6 +35,7 @@ function editProfile(nameProfile, aboutProfile) {
       about: aboutProfile
     })
   })
+  .then(checkingStatus);
 };
 
 // Редактирование аватара
@@ -49,6 +51,7 @@ function editAva(ava) {
       avatar: ava
     })
   })
+  .then(checkingStatus);
 };
 
 // Добавление новой карточки
@@ -65,6 +68,7 @@ function postCard(nameCard, linkCard) {
       link: linkCard
     })
   })
+  .then(checkingStatus);
 };
 
 // Добавление лайка карточки
@@ -76,6 +80,7 @@ function addLike(cardId) {
       authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0'
     }
   })
+  .then(checkingStatus);
 };
 
 // Удаление лайка карточки
@@ -87,6 +92,7 @@ function removeLike(cardId) {
       authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0'
     }
   })
+  .then(checkingStatus);
 };
 
 // Удаление карточки
@@ -98,4 +104,5 @@ function removeCard(cardId) {
       authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0'
     }
   })
+  .then(checkingStatus);
 };

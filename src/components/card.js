@@ -1,4 +1,4 @@
-import { checkingStatus, error } from './utils';
+import { error } from './utils';
 import { openedPopupImage } from './modal';
 import { addLike, removeLike, removeCard } from './api';
 export { createCard, addCard };
@@ -30,9 +30,8 @@ function createCard(txt, img, alt, otherLikes, cardId, ownersId, userId) {
   } else {
     buttonTrash.addEventListener('click', function () {
       removeCard(cardId)
-        .then(checkingStatus)
+        .then(deleteCard(cardId))
         .catch(error);
-      deleteCard(cardId);
     });
   };
   imageCard.addEventListener('click', (evt) => {
@@ -61,14 +60,12 @@ function likeCard(cardId, counterElement, buttonLike) {
   buttonLike.classList.toggle('card__like-button_active');
   if (buttonLike.classList.contains('card__like-button_active')) {
     addLike(cardId)
-      .then(checkingStatus)
       .then(data => {
         countLikes(counterElement, data.likes.length)
       })
       .catch(error);
   } else {
     removeLike(cardId)
-      .then(checkingStatus)
       .then(data => {
         countLikes(counterElement, data.likes.length)
       })

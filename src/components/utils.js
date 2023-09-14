@@ -2,8 +2,8 @@ export { renderLoading, checkingStatus, error };
 
 // Изменение кнопок отправки данных
 
-function renderLoading(popup, btnSave, cardButtonSave) {
-  if (btnSave === cardButtonSave && btnSave.textContent === 'Сохранение...') {
+function renderLoading(btnSave, btnCreate) {
+  if (btnSave === btnCreate && btnSave.textContent === 'Сохранение...') {
     btnSave.textContent = 'Создать';
   } else if (btnSave.textContent === 'Сохранение...') {
     btnSave.textContent = 'Сохранить';

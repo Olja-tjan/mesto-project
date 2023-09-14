@@ -1,6 +1,6 @@
 import '../styles/index.css';
 import { selectors, toggleButtonState, enableValidation } from './validate';
-import { renderLoading, checkingStatus, error } from './utils';
+import { renderLoading, error } from './utils';
 import { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup, closePopupOverlay } from './modal';
 import { createCard, addCard } from './card';
 import { userData, cardsData, editProfile, editAva, postCard } from './api';
@@ -51,13 +51,7 @@ function setCardInfo(cardInfo, userId) {
   });
 };
 
-const uD = userData
-  .then(checkingStatus)
-
-const cD = cardsData
-  .then(checkingStatus)
-
-Promise.all([uD, cD])
+Promise.all([userData, cardsData])
   .then(data => {
     console.log(data[1]);
     const userId = data[0]._id;
@@ -73,9 +67,8 @@ function handleFormSubmitProfileEdit(evt) {
   evt.preventDefault();
 
   editProfile(profileName.textContent = nameInput.value, profileDescription.textContent = jobInput.value)
-    .then(checkingStatus)
-    .then(closePopup(profileEditPopup))
-    .then(renderLoading(profileEditPopup, profileButtonSave))
+    .then(() => closePopup(profileEditPopup))
+    .then(() => renderLoading(profileButtonSave))
     .catch(error);
 };
 
@@ -85,30 +78,28 @@ function handleFormSubmitAvaEdit(evt) {
   evt.preventDefault();
 
   editAva(profileAvatar.src = avaInput.value)
-    .then(checkingStatus)
-    .then(closePopup(avaEditPopup))
-    .then(renderLoading(avaEditPopup, avaButtonSave))
+    .then(() => closePopup(avaEditPopup))
+    .then(() => renderLoading(avaButtonSave))
     .catch(error);
 };
+
 
 // Отправка формы карточки
 
 function handleFormSubmitCardCreate(evt) {
   evt.preventDefault();
 
-  renderLoading(cardAddPopup, cardButtonSave);
   const txtInput = imgNameInput.value;
   const imgInput = imgLinkInput.value;
 
   postCard(txtInput, imgInput)
-    .then(checkingStatus)
     .then(data => {
       const otherLikes = data.likes.length;
       const card = createCard(data.name, data.link, data.name, otherLikes, data._id, data.owner._id, data.owner._id);
       addCard(card, card);
       closePopup(cardAddPopup);
     })
-    .then(renderLoading(cardAddPopup, cardButtonSave, cardButtonSave))
+    .then(() => renderLoading(cardButtonSave, cardButtonSave))
     .catch(error);
   evt.target.reset();
 };
@@ -168,11 +159,11 @@ cardAddForm.addEventListener('submit', handleFormSubmitCardCreate);
 // Изменения текста кнопки:
 
 profileButtonSave.addEventListener('click', () => {
-  renderLoading(profileEditPopup, profileButtonSave);
+  renderLoading(profileButtonSave);
 });
 avaButtonSave.addEventListener('click', () => {
-  renderLoading(avaEditPopup, avaButtonSave);
+  renderLoading(avaButtonSave);
 });
 cardButtonSave.addEventListener('click', () => {
-  renderLoading(cardAddPopup, cardButtonSave, cardButtonSave);
+  renderLoading(cardButtonSave, cardButtonSave);
 });
