@@ -1,6 +1,7 @@
+import { checkingStatus, error } from './utils';
 import { openedPopupImage } from './modal';
-import { plusLike, minusLike, promiseDeleteCard } from './api';
-export { createCard, addCard, countLikes, deleteCard };
+import { addLike, removeLike, removeCard } from './api';
+export { createCard, addCard };
 
 const cardTemplate = document.querySelector('#card-template').content;
 const cardsLinks = document.querySelector('.cards__links');
@@ -28,7 +29,10 @@ function createCard(txt, img, alt, otherLikes, cardId, ownersId, userId) {
     buttonTrash.style.display = 'none';
   } else {
     buttonTrash.addEventListener('click', function () {
-      promiseDeleteCard(cardId);
+      removeCard(cardId)
+        .then(checkingStatus)
+        .catch(error);
+      deleteCard(cardId);
     });
   };
   imageCard.addEventListener('click', (evt) => {
@@ -36,14 +40,18 @@ function createCard(txt, img, alt, otherLikes, cardId, ownersId, userId) {
   });
 
   cardElement.querySelector('.card__caption').textContent = txt;
-  cardElement.querySelector('.card__image').src = img;
-  cardElement.querySelector('.card__image').alt = alt;
+  imageCard.src = img;
+  imageCard.alt = alt;
   cardElement.id = cardId;
   return cardElement
 };
 
-function addCard(item) {
-  cardsLinks.prepend(item);
+function addCard(item, card) {
+  if (item === card) {
+    cardsLinks.prepend(item);
+  } else {
+    cardsLinks.append(item);
+  }
 };
 
 // Лайк карточки
@@ -52,9 +60,19 @@ function likeCard(cardId, counterElement, buttonLike) {
 
   buttonLike.classList.toggle('card__like-button_active');
   if (buttonLike.classList.contains('card__like-button_active')) {
-    plusLike(cardId, counterElement);
+    addLike(cardId)
+      .then(checkingStatus)
+      .then(data => {
+        countLikes(counterElement, data.likes.length)
+      })
+      .catch(error);
   } else {
-    minusLike(cardId, counterElement);
+    removeLike(cardId)
+      .then(checkingStatus)
+      .then(data => {
+        countLikes(counterElement, data.likes.length)
+      })
+      .catch(error);
   }
 };
 

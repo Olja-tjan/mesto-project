@@ -4,3 +4,10 @@
   background: url(../../../images/ava-edit.svg) no-repeat center;
 }
 
+
+@media screen and (max-width: 917px) {
+  .profile__overlay {
+    justify-self: center;
+  }
+}
+

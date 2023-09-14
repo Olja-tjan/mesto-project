@@ -1,7 +1,9 @@
 import '../styles/index.css';
 import { selectors, toggleButtonState, enableValidation } from './validate';
+import { renderLoading, checkingStatus, error } from './utils';
 import { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup, closePopupOverlay } from './modal';
-import { profileName, profileDescription, profileAvatar, editProfile, editAva, postCard } from './api';
+import { createCard, addCard } from './card';
+import { userData, cardsData, editProfile, editAva, postCard } from './api';
 
 const profileEditPopup = document.querySelector('.popup_profile-edit');
 const cardAddPopup = document.querySelector('.popup_card-add');
@@ -23,28 +25,58 @@ const profileButtonSave = profileEditForm.querySelector('.popup__button-save');
 const avaButtonSave = avaEditForm.querySelector('.popup__button-save');
 const cardButtonSave = cardAddForm.querySelector('.popup__button-save');
 const { inactiveButtonClass } = selectors;
+const profileName = document.querySelector('.profile__name');
+const profileDescription = document.querySelector('.profile__description');
+const profileAvatar = document.querySelector('.profile__avatar');
 
-// Изменеие кнопок отправки данных:
+// Обработка данных с сервера
 
-function notifySaving(btnSave) {
-  btnSave.textContent = 'Сохранение...';
+function setUserInfo(userInfo) {
+  profileName.textContent = userInfo.name;
+  profileDescription.textContent = userInfo.about;
+  profileAvatar.src = userInfo.avatar;
 };
-function returnDefaultText(btnSave) {
-  btnSave.textContent = 'Сохранить';
+
+function setCardInfo(cardInfo, userId) {
+  cardInfo.forEach(function (el) {
+    const otherLikes = el.likes.length;
+    const initialCard = createCard(el.name, el.link, el.name, otherLikes, el._id, el.owner._id, userId);
+    addCard(initialCard);
+    el.likes.forEach(function (elLike) {
+      if (elLike._id === userId) {
+        const buttonLike = document.getElementById(el._id).querySelector('.card__like-button');
+        buttonLike.classList.add('card__like-button_active');
+      }
+    });
+  });
 };
-function returnDefaultTextcardAdd(btnSave) {
-  btnSave.textContent = 'Создать';
-};
+
+const uD = userData
+  .then(checkingStatus)
+
+const cD = cardsData
+  .then(checkingStatus)
+
+Promise.all([uD, cD])
+  .then(data => {
+    console.log(data[1]);
+    const userId = data[0]._id;
+    setUserInfo(data[0]);
+    setCardInfo(data[1], userId);
+    console.log(data[1]);
+  })
+  .catch(error);
 
 // Отправка формы профиля
 
 function handleFormSubmitProfileEdit(evt) {
   evt.preventDefault();
 
-  notifySaving(profileButtonSave);
   editProfile(profileName.textContent = nameInput.value, profileDescription.textContent = jobInput.value)
-  closePopup(profileEditPopup);
-  returnDefaultText(profileButtonSave);
+    .then(checkingStatus)
+    .then(closePopup(profileEditPopup))
+    .then(renderLoading(profileEditPopup, profileButtonSave))
+    .catch(error);
 };
 
 // Отправка формы аватара
@@ -52,10 +84,11 @@ function handleFormSubmitProfileEdit(evt) {
 function handleFormSubmitAvaEdit(evt) {
   evt.preventDefault();
 
-  notifySaving(avaButtonSave);
   editAva(profileAvatar.src = avaInput.value)
-  closePopup(avaEditPopup);
-  returnDefaultText(avaButtonSave);
+    .then(checkingStatus)
+    .then(closePopup(avaEditPopup))
+    .then(renderLoading(avaEditPopup, avaButtonSave))
+    .catch(error);
 };
 
 // Отправка формы карточки
@@ -63,13 +96,20 @@ function handleFormSubmitAvaEdit(evt) {
 function handleFormSubmitCardCreate(evt) {
   evt.preventDefault();
 
-  notifySaving(cardButtonSave);
+  renderLoading(cardAddPopup, cardButtonSave);
   const txtInput = imgNameInput.value;
   const imgInput = imgLinkInput.value;
 
-  postCard(txtInput, imgInput, txtInput);
-  closePopup(cardAddPopup);
-  returnDefaultTextcardAdd(cardButtonSave);
+  postCard(txtInput, imgInput)
+    .then(checkingStatus)
+    .then(data => {
+      const otherLikes = data.likes.length;
+      const card = createCard(data.name, data.link, data.name, otherLikes, data._id, data.owner._id, data.owner._id);
+      addCard(card, card);
+      closePopup(cardAddPopup);
+    })
+    .then(renderLoading(cardAddPopup, cardButtonSave, cardButtonSave))
+    .catch(error);
   evt.target.reset();
 };
 
@@ -124,3 +164,15 @@ cardZoomPopup.addEventListener('click', closePopupOverlay);
 profileEditForm.addEventListener('submit', handleFormSubmitProfileEdit);
 avaEditForm.addEventListener('submit', handleFormSubmitAvaEdit);
 cardAddForm.addEventListener('submit', handleFormSubmitCardCreate);
+
+// Изменения текста кнопки:
+
+profileButtonSave.addEventListener('click', () => {
+  renderLoading(profileEditPopup, profileButtonSave);
+});
+avaButtonSave.addEventListener('click', () => {
+  renderLoading(avaEditPopup, avaButtonSave);
+});
+cardButtonSave.addEventListener('click', () => {
+  renderLoading(cardAddPopup, cardButtonSave, cardButtonSave);
+});

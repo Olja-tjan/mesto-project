@@ -1,3 +1,4 @@
+import { renderLoading } from './utils';
 export { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup, openedPopupImage, closePopupOverlay };
 
 const cardZoomPopup = document.querySelector('.popup_card-zoom');
