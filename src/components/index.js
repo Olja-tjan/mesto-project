@@ -37,7 +37,7 @@ function setUserInfo(userInfo) {
   profileAvatar.src = userInfo.avatar;
 };
 
-function setCardInfo(cardInfo, userId) {
+function renderItems(cardInfo, userId) {
   cardInfo.forEach(function (el) {
     const otherLikes = el.likes.length;
     const initialCard = createCard(el.name, el.link, el.name, otherLikes, el._id, el.owner._id, userId);
@@ -56,7 +56,7 @@ Promise.all([userData, cardsData])
     console.log(data[1]);
     const userId = data[0]._id;
     setUserInfo(data[0]);
-    setCardInfo(data[1], userId);
+    renderItems(data[1], userId);
     console.log(data[1]);
   })
   .catch(error);
