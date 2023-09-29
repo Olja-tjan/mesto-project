@@ -106,3 +106,30 @@ function removeCard(cardId) {
   })
   .then(checkingStatus);
 };
+// В api.js:
+
+class Api {
+  constructor({ baseUrl, headers }) {
+    this.baseUrl = baseUrl;
+    this.headers = headers;
+  }
+
+  getInitialCards() {
+        return fetch(`${this.baseUrl}/cards`, {
+          headers: this.headers
+
+        })
+        .then(checkingStatus)
+  }
+
+  // другие методы
+};
+
+  // В index.js:
+  const api = new Api({
+    baseUrl: 'https://nomoreparties.co/v1/cohort-42',
+    headers: {
+      authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0',
+      'Content-Type': 'application/json'
+    }
+  });
