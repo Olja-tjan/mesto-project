@@ -1,7 +1,9 @@
+// _checkingStatus
 import { checkingStatus } from './utils'
 export { userData, cardsData, editProfile, editAva, postCard, addLike, removeLike, removeCard };
 
 // Загрузка информации о пользователе с сервера
+// getUserInfo
 
 const userData =
   fetch('https://nomoreparties.co/v1/plus-cohort-28/users/me', {
@@ -9,9 +11,10 @@ const userData =
       authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0'
     }
   })
-  .then(checkingStatus);
+    .then(checkingStatus);
 
 // Загрузка карточек с сервера
+// getInitialCards
 
 const cardsData =
   fetch('https://nomoreparties.co/v1/plus-cohort-28/cards', {
@@ -19,7 +22,7 @@ const cardsData =
       authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0'
     }
   })
-  .then(checkingStatus);
+    .then(checkingStatus);
 
 // Редактирование профиля
 
@@ -35,7 +38,7 @@ function editProfile(nameProfile, aboutProfile) {
       about: aboutProfile
     })
   })
-  .then(checkingStatus);
+    .then(checkingStatus);
 };
 
 // Редактирование аватара
@@ -51,7 +54,7 @@ function editAva(ava) {
       avatar: ava
     })
   })
-  .then(checkingStatus);
+    .then(checkingStatus);
 };
 
 // Добавление новой карточки
@@ -68,7 +71,7 @@ function postCard(nameCard, linkCard) {
       link: linkCard
     })
   })
-  .then(checkingStatus);
+    .then(checkingStatus);
 };
 
 // Добавление лайка карточки
@@ -80,7 +83,7 @@ function addLike(cardId) {
       authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0'
     }
   })
-  .then(checkingStatus);
+    .then(checkingStatus);
 };
 
 // Удаление лайка карточки
@@ -92,7 +95,7 @@ function removeLike(cardId) {
       authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0'
     }
   })
-  .then(checkingStatus);
+    .then(checkingStatus);
 };
 
 // Удаление карточки
@@ -104,5 +107,58 @@ function removeCard(cardId) {
       authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0'
     }
   })
-  .then(checkingStatus);
+    .then(checkingStatus);
 };
+
+// класс Api
+
+class Api {
+  constructor({ baseUrl, headers }) {
+    this.baseUrl = baseUrl;
+    this.headers = headers;
+  }
+
+  _checkingStatus(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+  getUserInfo() {
+    return fetch(`${this.baseUrl}/users/me`, {
+      headers: this.headers
+    })
+      .then(this._checkingStatus)
+  }
+
+  getInitialCards() {
+    return fetch(`${this.baseUrl}/cards`, {
+      headers: this.headers
+    })
+      .then(this._checkingStatus)
+  }
+
+  editUserInfo() {}
+
+  editAvatar() {}
+
+  addCard() {}
+
+  removeCard() {}
+
+  addLike() {}
+
+  removeLike() {}
+}
+
+
+// в index.js:
+
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/cohort-42',
+  headers: {
+    authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
+    'Content-Type': 'application/json'
+  }
+});
