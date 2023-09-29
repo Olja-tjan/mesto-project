@@ -2,8 +2,8 @@ import '../styles/index.css';
 import { selectors, toggleButtonState, enableValidation } from './validate';
 import { renderLoading, error } from './utils';
 import { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup, closePopupOverlay } from './modal';
-import { createCard, addCard } from './card';
-import { userData, cardsData, editProfile, editAva, postCard } from './api';
+import { createCard, addCard } from './Card';
+import { Api } from './Api';
 
 const profileEditPopup = document.querySelector('.popup_profile-edit');
 const cardAddPopup = document.querySelector('.popup_card-add');

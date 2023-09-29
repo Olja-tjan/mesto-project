@@ -1,4 +1,4 @@
-export { renderLoading, checkingStatus, error };
+export { renderLoading, error };
 
 // Изменение кнопок отправки данных
 
@@ -13,13 +13,6 @@ function renderLoading(btnSave, btnCreate) {
 };
 
 // Проверка статуса запроса
-
-function checkingStatus(res) {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка: ${res.status}`);
-};
 
 function error(err) {
   console.log(err);

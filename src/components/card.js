@@ -1,6 +1,5 @@
 import { error } from './utils';
 import { openedPopupImage } from './modal';
-import { addLike, removeLike, removeCard } from './api';
 export { createCard, addCard };
 
 const cardTemplate = document.querySelector('#card-template').content;
@@ -79,3 +78,59 @@ function deleteCard(cardId) {
   const cardItem = document.getElementById(cardId);
   cardItem.remove();
 };
+
+class Card {
+  constructor(userId, cardData, templateSelector, { handleCardClick }, { handleLikeClick }, { handleDeleteClick }) {
+    this._userId = userId;
+    this._ownerId = cardData.owner._id;
+    this._cardId = cardData._id;
+    this._name = cardData.name;
+    this._link = cardData.link;
+    this._otherLikes = cardData.otherLikes;
+    this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
+    this._handleLikeClick = handleLikeClick;
+    this._handleDeleteClick = handleDeleteClick;
+  }
+
+  _getTemplate() {
+    const cardElement = document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true);
+    return cardElement;
+  }
+
+  createCard() {
+    this._cardElement = this._getTemplate();
+    this._buttonLike = this._cardElement.querySelector('.card__like-button');
+    this._buttonTrash = this._cardElement.querySelector('.card__trash-button');
+    this._imageCard = this._cardElement.querySelector('.card__image');
+    this._counterElement = this._cardElement.querySelector('.card__likes');
+    this._caption = this._cardElement.querySelector('.card__caption');
+
+
+    if (this._ownersId !== this._userId) {
+      this._buttonTrash.style.display = 'none';
+    }
+
+    this._setEventListeners();
+
+		this._counterElement.textContent = this._otherLikes;
+    this._caption.textContent = this._name;
+    this._imageCard.src = this._link;
+    this._imageCard.alt = this._name;
+
+    return this._cardElement
+  }
+
+
+  _setEventListeners() {
+    this._buttonLike.addEventListener('click', () => {
+      this._handleLikeClick(this._cardId);
+    });
+    this._buttonTrash.addEventListener('click', () => {
+      this._handleDeleteClick();
+    });
+    this._imageCard.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link);
+    });
+  }
+}
