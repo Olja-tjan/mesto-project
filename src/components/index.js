@@ -39,15 +39,8 @@ function setUserInfo(userInfo) {
 
 function renderItems(cardInfo, userId) {
   cardInfo.forEach(function (el) {
-    const otherLikes = el.likes.length;
-    const initialCard = createCard(el.name, el.link, el.name, otherLikes, el._id, el.owner._id, userId);
+    const initialCard = createCard(el.name, el.link, el.name, el.likes, el._id, el.owner._id, userId);
     addCard(initialCard);
-    el.likes.forEach(function (elLike) {
-      if (elLike._id === userId) {
-        const buttonLike = document.getElementById(el._id).querySelector('.card__like-button');
-        buttonLike.classList.add('card__like-button_active');
-      }
-    });
   });
 };
 
