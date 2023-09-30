@@ -2,10 +2,10 @@ export { selectors, toggleButtonState, enableValidation };
 
 const selectors = {
   inputErrorClass: 'popup__input_error',
-  inputErrorActiveClass: 'popup__input-error_active',
   inactiveButtonClass: 'popup__button-save_inactive',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button-save',
+
   formSelector: '.popup__container-form'
 };
 
