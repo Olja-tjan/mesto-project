@@ -74,3 +74,28 @@ const enableValidation = ({formSelector, ...rest}) => {
     setEventListeners(formElement, rest);
   })
 };
+
+
+class FormValidator {
+  constructor(selectors, formElement) {
+    this._form = formElement;
+    this._inputSelector = selectors.inputSelector;
+    this._submitButtonSelector = selectors.submitButtonSelector;
+    this._inactiveButtonClass = selectors.inactiveButtonClass;
+    this._inputErrorClass = selectors.inputErrorClass;
+    this._inputs = Array.from(this._form.querySelectorAll(this._inputSelector));
+    this._button = this._form.querySelector(this._submitButtonSelector);
+  }
+
+  _showInputError = (inputElement, errorMessage,) {
+    const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.add(this._inputErrorClass);
+    errorElement.textContent = errorMessage;
+  };
+
+  _hideInputError = (inputElement) {
+    const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove(this._inputErrorClass);
+    errorElement.textContent = '';
+  };
+}
