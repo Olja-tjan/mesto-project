@@ -1,43 +1,34 @@
-class Popup {
-    constructor (popupSelector) {
-      this.popup = document.querySelector(popupSelector);
+export class Popup {
+  constructor(popupSelector) {
+    this._popup = document.querySelector(popupSelector);
+    this._handleEscClose = this._handleEscClose.bind(this);
+  }
+
+
+  openPopup() {
+    this._popup.classList.add('popup_opened');
+    document.addEventListener('keydown', this._handleEscClose);
+  };
+
+
+  closePopup() {
+    this._popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', this._handleEscClose);
+  };
+
+
+  _handleEscClose(evt) {
+    if (evt.key === 'Escape') {
+      this.closePopup();
     }
+  };
+
+
+  setEventListeners() {
+    this._popup.addEventListener('click', (evt) => {
+      if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__button-close')) {
+        this.closePopup();
+      }
+    })
+  };
 }
-
-// Работа модальных окон:
-
-openPopup() {
-  this.popup.classList.add('popup_opened');
-  document.addEventListener('keydown', this._handleEscClose);
-};
-
-closePopup() {
-  this.popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', this._handleEscClose);
-};
-
-// Закрытие модального окна нажатием на оверлей
-
-function closePopupOverlay(evt) {
-  if (evt.currentTarget === evt.target) {
-    closePopup(evt.currentTarget);
-  }
-};
-
-// Закрытие модального окна нажатием на Esc
-
-_handleEscClose(evt) {
-  if (evt.key === 'Escape') {
-    const popupOpened = document.querySelector('.popup_opened')
-    closePopup(popupOpened);
-  }
-};
-
-// Открытие модального окна с картинкой
-
-function openedPopupImage(evt) {
-  img.src = evt.currentTarget.src;
-  img.alt = evt.currentTarget.alt;
-  caption.textContent = evt.currentTarget.nextElementSibling.textContent;
-  openPopup(cardZoomPopup);
-};
