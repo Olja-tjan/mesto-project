@@ -1,6 +1,4 @@
-import { error } from './utils';
-import { openedPopupImage } from './modal';
-export { createCard, addCard };
+
 
 // В index.js
 const cardTemplate = document.querySelector('#card-template').content;
@@ -131,7 +129,7 @@ class Card {
 
     this._setEventListeners();
 
-		this._counterElement.textContent = this._likes;
+    this._counterElement.textContent = this._likes;
     this._caption.textContent = this._name;
     this._imageCard.src = this._link;
     this._imageCard.alt = this._name;
@@ -169,12 +167,12 @@ class Card {
 
 
   toggleLike() {
-      if(this.hasMyLike()) {
-        this._like.classList.add('card__like-button_active');
-      } else {
-        this._like.classList.remove('card__like-button_active');
-      }
+    if (this.hasMyLike()) {
+      this._like.classList.add('card__like-button_active');
+    } else {
+      this._like.classList.remove('card__like-button_active');
     }
+  }
 
 
   updateCounter(amountLikes) {

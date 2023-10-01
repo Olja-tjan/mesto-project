@@ -1,9 +1,13 @@
-import '../styles/index.css';
-import { selectors, toggleButtonState, enableValidation } from './validate';
-import { renderLoading, error } from './utils';
-import { cardZoomPopup, cardZoomButtonClose, openPopup, closePopup, closePopupOverlay } from './modal';
-import { createCard, addCard } from './Card';
-import { Api } from './Api';
+import './index.css';
+
+import { Api } from '../components/Api';
+import { Card} from '../components/Card';
+import { FormValidator } from '../components/FormValidator';
+import { Popup } from '../components/Popup';
+import { PopupWithForm } from '../components/PopupWithForm';
+import { PopupWithImage } from '../components/PopupWithImage';
+import { Section } from '../components/Section';
+import { UserInfo } from '../components/UserInfo';
 
 const profileEditPopup = document.querySelector('.popup_profile-edit');
 const cardAddPopup = document.querySelector('.popup_card-add');

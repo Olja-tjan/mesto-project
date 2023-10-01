@@ -1,5 +1,5 @@
-export { selectors, toggleButtonState, enableValidation };
 
+// в index.js
 const selectors = {
   inputErrorClass: 'popup__input_error',
   inactiveButtonClass: 'popup__button-save_inactive',
@@ -10,7 +10,7 @@ const selectors = {
 };
 
 
-class FormValidator {
+export class FormValidator {
   constructor(selectors, formElement) {
     this._form = formElement;
     this._inputSelector = selectors.inputSelector;
