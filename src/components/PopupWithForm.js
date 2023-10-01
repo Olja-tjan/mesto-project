@@ -15,12 +15,6 @@ export class PopupWithForm extends Popup {
     return inputValues;
   }
 
-  // var element = {};
-  // // вы определяете element быть простым объектом.
-  // // Чтобы добавить новые элементы в обычный объект, используйте этот синтаксис:
-  // element[ yourKey ] = yourValue;
-
-
 
   setEventListeners() {
     super.setEventListeners();
