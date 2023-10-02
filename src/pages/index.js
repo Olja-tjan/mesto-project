@@ -1,7 +1,7 @@
 import './index.css';
 
 import { Api } from '../components/Api';
-import { Card} from '../components/Card';
+import { Card } from '../components/Card';
 import { FormValidator } from '../components/FormValidator';
 import { Popup } from '../components/Popup';
 import { PopupWithForm } from '../components/PopupWithForm';
@@ -165,3 +165,139 @@ cardButtonSave.addEventListener('click', () => {
   renderLoading(cardButtonSave, cardButtonSave);
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Новый index.js
+
+
+// Экземпляр класса Api создается единожды.
+
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/cohort-42',
+  headers: {
+    authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
+    'Content-Type': 'application/json'
+  }
+});
+
+// Обработка данных с сервера
+
+function setUserInfo(userInfo) {
+  profileName.textContent = userInfo.name;
+  profileDescription.textContent = userInfo.about;
+  profileAvatar.src = userInfo.avatar;
+};
+
+function renderItems(cardInfo, userId) {
+  cardInfo.forEach(function (el) {
+    const initialCard = createCard(el.name, el.link, el.name, el.likes, el._id, el.owner._id, userId);
+    addCard(initialCard);
+  });
+};
+
+const selectors = {
+  inputErrorClass: 'popup__input_error',
+  inactiveButtonClass: 'popup__button-save_inactive',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button-save',
+
+  formSelector: '.popup__container-form',
+
+  cardTemplate: '#card-template',
+  popupImageSelector: '.popup_card-zoom'
+};
+
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    const userId = userData._id;
+    cards.reverse();
+    cards.forEach((card) => {
+      const card = new Card(
+        userId, card, cardTemplate,
+        { handleCardClick: (_id) => {
+            _id.addEventListener('click', popupWithImage.openPopup);
+          }
+        },
+        { handleDeleteClick: () => {
+
+        },
+      },
+        { handleLikeClick: () => {
+
+        }
+        }
+    );
+  });
+  })
+  .catch (error);
+
+
+
+const card = new Card(userId, cardData, templateSelector, { handleCardClick }, { handleLikeClick }, { handleRemoveClick });
+
+// В index.js
+function addCard(item, card) {
+  if (item === card) {
+    cardsLinks.prepend(item);
+  } else {
+    cardsLinks.append(item);
+  }
+};
+
+// В index.js
+const cardTemplate = document.querySelector('#card-template').content;
+
+// В index.js
+const cardsLinks = document.querySelector('.cards__links');
+
+// Экземпляр класса FormValidator создаётся для каждой проверяемой формы.
+
+const formValidator = new FormValidator();
+
+const popup = new Popup();
+
+const popupWithForm = new PopupWithForm();
+
+const popupWithImage = new PopupWithImage(popupImageSelector);
+
+
+// Экземпляр класса Section создается для каждого контейнера,
+// в который требуется отрисовывать элементы.
+
+const section = new Section();
+
+
+// Экземпляр класса UserInfo создается единожды.
+
+const userInfo = new UserInfo();

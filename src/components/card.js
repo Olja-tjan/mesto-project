@@ -91,7 +91,7 @@ function deleteCard(cardId) {
 
 // Класс Card
 
-class Card {
+export class Card {
   constructor(userId, cardData, templateSelector, { handleCardClick }, { handleLikeClick }, { handleRemoveClick }) {
     this._userId = userId;
     this._ownerId = cardData.owner._id;
