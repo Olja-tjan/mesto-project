@@ -156,13 +156,13 @@ export class Card {
   // Лайк карточки
 
   // Если id лайка, сопадёт с id пользователя, вернёт true
-  hasMyLike() {
+  checkingLike() {
     return this._likes.some((like) => like._id === this._userId);
   }
 
 
   toggleLike() {
-    if (this.hasMyLike()) {
+    if (this.checkingLike()) {
       this._like.classList.add('card__like-button_active');
     } else {
       this._like.classList.remove('card__like-button_active');

@@ -221,11 +221,19 @@ const api = new Api({
   }
 });
 
+// Экземпляр класса UserInfo создается единожды.
+
+const userInfo = new UserInfo({
+  userName: '.profile__name',
+  userAbout: '.profile__description',
+  userAvatar: '.profile__avatar'
+});
+
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
     const userId = userData._id;
-    setUserInfo(userData.name, userData.about, userData.avatar);
+    userInfo(userData.name, userData.about, userData.avatar);
     cardContainer.renderItem(cards);
   })
   .catch(error);
@@ -246,26 +254,7 @@ const cardContainer = new Section({
   '.cards__links'
 );
 
-cards.forEach((card) => {
-  const card = new Card(
-    userId, card, cardTemplate,
-    {
-      handleCardClick: (_id) => {
-        _id.addEventListener('click', popupWithImage.openPopup);
-      }
-    },
-    {
-      handleDeleteClick: () => {
-
-      },
-    },
-    {
-      handleLikeClick: () => {
-
-      }
-    }
-  );
-});
+// Как передать userId в карточку
 
 function createCard(cardData) {
   const card = new Card(
@@ -273,17 +262,34 @@ function createCard(cardData) {
     cardData,
     '#card-template',
     {
-      handleCardClick: (cardData) => {
-        const idCard = cardData._id
-        idCard.addEventListener('click', popupWithImage.openPopup);
+      handleCardClick: (name, link) => {
+        popupWithImage.openPopup(link, name);
       },
     },
     { handleLikeClick: () => {
-
+      card.checkingLike()
+        ? api
+          .removeLike(id)
+          .then((res) => {
+            card.updateCounter(res.likes);
+          })
+          .catch(error)
+        : api
+          .addLike(id)
+          .then((res) => {
+            card.updateCounter(res.likes);
+          })
+          .catch(error)
       },
     },
     { handleRemoveClick: () => {
-
+      // Куда добавить проверку чья карточка, чтобы скрывать корзину, если карточка создана не пользователем
+        api
+        .removeCard(cardData._id)
+        .then(() => {
+          card.handleRemoveCard()
+        })
+        .catch(error)
       },
     }
   );
@@ -316,6 +322,3 @@ const popupWithForm = new PopupWithForm();
 const popupWithImage = new PopupWithImage(popupImageSelector);
 
 
-// Экземпляр класса UserInfo создается единожды.
-
-const userInfo = new UserInfo();
