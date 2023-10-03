@@ -1,11 +1,3 @@
-
-
-// В index.js
-const cardTemplate = document.querySelector('#card-template').content;
-
-// В index.js
-const cardsLinks = document.querySelector('.cards__links');
-
 // Счётчик лайков
 
 function countLikes(counterElement, counter) {
@@ -88,6 +80,9 @@ function deleteCard(cardId) {
   const cardItem = document.getElementById(cardId);
   cardItem.remove();
 };
+
+
+
 
 // Класс Card
 
