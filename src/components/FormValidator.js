@@ -1,15 +1,3 @@
-
-// в index.js
-const selectors = {
-  inputErrorClass: 'popup__input_error',
-  inactiveButtonClass: 'popup__button-save_inactive',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button-save',
-
-  formSelector: '.popup__container-form'
-};
-
-
 export class FormValidator {
   constructor(selectors, formElement) {
     this._form = formElement;
@@ -86,4 +74,3 @@ export class FormValidator {
     this._setEventListeners();
   };
 }
-

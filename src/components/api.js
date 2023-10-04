@@ -4,6 +4,7 @@ export class Api {
     this._headers = headers;
   }
 
+
   _checkingStatus(res) {
     if (res.ok) {
       return res.json();
