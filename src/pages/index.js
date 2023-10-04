@@ -8,6 +8,7 @@ import { PopupWithForm } from '../components/PopupWithForm';
 import { PopupWithImage } from '../components/PopupWithImage';
 import { Section } from '../components/Section';
 import { UserInfo } from '../components/UserInfo';
+import { error } from '../components/utils';
 
 const profileEditPopup = document.querySelector('.popup_profile-edit');
 const cardAddPopup = document.querySelector('.popup_card-add');
@@ -17,9 +18,9 @@ const cardAddButton = document.querySelector('.profile__add-button');
 const profileEditButtonClose = profileEditPopup.querySelector('.popup__button-close');
 const cardAddButtonClose = cardAddPopup.querySelector('.popup__button-close');
 const avaEditButtonClose = avaEditPopup.querySelector('.popup__button-close');
-const profileEditForm = profileEditPopup.querySelector('.popup__container-form');
-const cardAddForm = cardAddPopup.querySelector('.popup__container-form');
-const avaEditForm = avaEditPopup.querySelector('.popup__container-form');
+//const profileEditForm = profileEditPopup.querySelector('.popup__container-form');
+//const cardAddForm = cardAddPopup.querySelector('.popup__container-form');
+//const avaEditForm = avaEditPopup.querySelector('.popup__container-form');
 const nameInput = document.querySelector('#name');
 const avaInput = document.querySelector('#image-link-ava');
 const jobInput = document.querySelector('#description');
@@ -233,7 +234,8 @@ const userInfo = new UserInfo({
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
     const userId = userData._id;
-    userInfo(userData.name, userData.about, userData.avatar);
+    userInfo.setUserInfo(userData.name, userData.about);
+    userInfo.setAvatarInfo(userData.avatar);
     cardContainer.renderItem(cards);
   })
   .catch(error);
@@ -294,6 +296,86 @@ function createCard(cardData) {
     }
   );
 }
+
+
+
+
+
+
+// Отправка формы аватара
+
+function handleFormSubmitAvaEdit(evt) {
+  evt.preventDefault();
+
+  editAva(profileAvatar.src = avaInput.value)
+    .then(() => closePopup(avaEditPopup))
+    .then(() => renderLoading(avaButtonSave))
+    .catch(error);
+};
+
+
+// Отправка формы карточки
+
+function handleFormSubmitCardCreate(evt) {
+  evt.preventDefault();
+
+  const txtInput = imgNameInput.value;
+  const imgInput = imgLinkInput.value;
+
+  postCard(txtInput, imgInput)
+    .then(data => {
+      const otherLikes = data.likes.length;
+      const card = createCard(data.name, data.link, data.name, otherLikes, data._id, data.owner._id, data.owner._id);
+      addCard(card, card);
+      closePopup(cardAddPopup);
+    })
+    .then(() => renderLoading(cardButtonSave, cardButtonSave))
+    .catch(error);
+  evt.target.reset();
+};
+
+// Отправка формы профиля
+
+function handleFormSubmitProfileEdit(evt) {
+  evt.preventDefault();
+
+  editProfile(profileName.textContent = nameInput.value, profileDescription.textContent = jobInput.value)
+    .then(() => closePopup(profileEditPopup))
+    .then(() => renderLoading(profileButtonSave))
+    .catch(error);
+};
+
+const profileEditForm = new PopupWithForm('.popup_profile-edit', () => {
+  profileEditForm.renderLoading("Сохранение...");
+  api
+  .editUserInfo(nameProfile, aboutProfile)
+  .then(() => userInfo(name, about, avatar))
+  .then(() => profileEditForm.closePopup())
+  .catch(error)
+  .finally(() => profileEditForm.renderLoading("Сохранить"));
+});
+profileEditForm.setEventListeners();
+
+const cardAddForm = new PopupWithForm('.popup_card-add', () => {
+  cardAddForm.renderLoading("Сохранение...");
+  api
+  .addCard(nameCard, linkCard)
+  .then
+  .then
+  .catch(error)
+  .finally(() => cardAddForm.renderLoading("Сохранить"));
+});
+
+const avaEditForm = new PopupWithForm('.popup_ava-edit', () => {
+  avaEditForm.renderLoading("Сохранение...");
+  api
+  .editAvatar(ava)
+  .then
+  .then
+  .catch(error)
+  .finally(() => avaEditForm.renderLoading("Сохранить"));
+});
+
 
 
 // В index.js
