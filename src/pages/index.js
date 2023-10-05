@@ -45,9 +45,9 @@ profileAvatarButton.addEventListener('click', () => {
 
 
 const api = new Api({
-  baseUrl: 'https://nomoreparties.co/v1/cohort-42',
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-28',
   headers: {
-    authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
+    authorization: 'ef5df4b1-0580-4314-b10f-2fd4a208efc0',
     'Content-Type': 'application/json'
   }
 });
@@ -62,6 +62,7 @@ const userInfo = new UserInfo({
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
+    console.log(userData);
     userId = userData._id;
     userInfo.setUserInfo(userData.name, userData.about);
     userInfo.setAvatarInfo(userData.avatar);

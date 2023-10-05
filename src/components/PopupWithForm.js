@@ -38,3 +38,7 @@ export class PopupWithForm extends Popup {
 		this._submitButton.textContent = text;
 	}
 }
+
+function renderLoading(submitButton, text) {
+  submitButton.textContent = text;
+}
