@@ -62,7 +62,6 @@ const userInfo = new UserInfo({
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
-    console.log(userData);
     userId = userData._id;
     userInfo.setUserInfo(userData.name, userData.about);
     userInfo.setAvatarInfo(userData.avatar);
@@ -90,15 +89,16 @@ function createCard(cardData) {
     '#card-template',
     {
       handleCardClick: (name, link) => {
-        popupWithImage.openPopup(link, name);
+        popupWithImage.openPopup(name, link);
       },
     },
     {
-      handleLikeClick: () => {
+      handleLikeClick: (id) => {
         card.checkingLike()
           ? api
             .removeLike(id)
             .then((res) => {
+              console.log(res.likes);
               card.updateCounter(res.likes);
             })
             .catch(error)
@@ -121,7 +121,7 @@ function createCard(cardData) {
       },
     }
   );
-  const cardElement = card.addCard();
+  const cardElement = card.createCard();
   return cardElement;
 }
 
