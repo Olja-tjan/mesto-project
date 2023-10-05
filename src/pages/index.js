@@ -143,7 +143,7 @@ formValidatorEditAva.enableValidation();
 const profileEditForm = new PopupWithForm('.popup_profile-edit', (values) => {
   profileEditForm.renderLoading("Сохранение...");
   api
-    .editUserInfo(values)
+    .editUserInfo(values.name, values.description)
     .then((res) => userInfo.setUserInfo(res.name, res.about))
     .then(() => profileEditForm.closePopup())
     .catch(error)
@@ -153,9 +153,10 @@ profileEditForm.setEventListeners();
 
 
 const cardAddForm = new PopupWithForm('.popup_card-add', (values) => {
+  console.log(values);
   cardAddForm.renderLoading("Сохранение...");
   api
-    .addCard(values)
+    .addCard(values['image-name'], values['image-link'])
     .then((res) => cardContainer.addItem(createCard(res)))
     .then(() => cardAddForm.closePopup())
     .catch(error)
@@ -165,10 +166,11 @@ cardAddForm.setEventListeners();
 
 
 const editAvaForm = new PopupWithForm('.popup_ava-edit', (values) => {
+  console.log(values);
   editAvaForm.renderLoading("Сохранение...");
   api
-    .editAvatar(values)
-    .then((res) => userInfo.setAvatarInfo(res))
+    .editAvatar(values['image-link-ava'])
+    .then((res) => userInfo.setAvatarInfo(res.avatar))
     .then(() => editAvaForm.closePopup())
     .catch(error)
     .finally(() => editAvaForm.renderLoading("Сохранить"));
