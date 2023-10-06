@@ -31,9 +31,11 @@ export class Card {
     this._caption = this._cardElement.querySelector('.card__caption');
 
     // Проверка своя ли карточка
-    if (this._ownersId !== this._userId) {
+    if (this._ownerId !== this._userId) {
       this._buttonTrash.style.display = 'none';
     }
+
+    this.updateCounter(this._likes);
 
     this._setEventListeners();
 
