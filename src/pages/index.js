@@ -7,19 +7,8 @@ import { PopupWithForm } from '../components/PopupWithForm';
 import { PopupWithImage } from '../components/PopupWithImage';
 import { Section } from '../components/Section';
 import { UserInfo } from '../components/UserInfo';
-import { selectors, error } from '../utils/utils';
-
-
-const profileEditButton = document.querySelector('.profile__edit-button');
-const cardAddButton = document.querySelector('.profile__add-button');
-const profileAvatarButton = document.querySelector('.profile__overlay');
-
-const nameInput = document.querySelector('#name');
-const aboutInput = document.querySelector('#description');
-
-const formElementEditProfile = document.forms["form-edit-profile"];
-const formElementAddCard = document.forms["form-create-card"];
-const formElementEditAva = document.forms["form-edit-ava"];
+import { error } from '../utils/utils';
+import { selectors, profileEditButton, cardAddButton, profileAvatarButton, nameInput, aboutInput, formElementEditProfile, formElementAddCard, formElementEditAva } from '../utils/constants';
 
 
 // Слушатели кнопок открытия форм:
@@ -98,7 +87,6 @@ function createCard(cardData) {
           ? api
             .removeLike(id)
             .then((res) => {
-              console.log(res.likes);
               card.updateCounter(res.likes);
             })
             .catch(error)
@@ -144,8 +132,9 @@ const profileEditForm = new PopupWithForm('.popup_profile-edit', (values) => {
   profileEditForm.renderLoading("Сохранение...");
   api
     .editUserInfo(values.name, values.description)
-    .then((res) => userInfo.setUserInfo(res.name, res.about))
-    .then(() => profileEditForm.closePopup())
+    .then((res) =>
+      userInfo.setUserInfo(res.name, res.about),
+      profileEditForm.closePopup())
     .catch(error)
     .finally(() => profileEditForm.renderLoading("Сохранить"));
 });
@@ -157,8 +146,9 @@ const cardAddForm = new PopupWithForm('.popup_card-add', (values) => {
   cardAddForm.renderLoading("Сохранение...");
   api
     .addCard(values['image-name'], values['image-link'])
-    .then((res) => cardContainer.addItem(createCard(res)))
-    .then(() => cardAddForm.closePopup())
+    .then((res) =>
+      cardContainer.addItem(createCard(res)),
+      cardAddForm.closePopup())
     .catch(error)
     .finally(() => cardAddForm.renderLoading("Создать"));
 });
@@ -170,8 +160,9 @@ const editAvaForm = new PopupWithForm('.popup_ava-edit', (values) => {
   editAvaForm.renderLoading("Сохранение...");
   api
     .editAvatar(values['image-link-ava'])
-    .then((res) => userInfo.setAvatarInfo(res.avatar))
-    .then(() => editAvaForm.closePopup())
+    .then((res) =>
+      userInfo.setAvatarInfo(res.avatar),
+      editAvaForm.closePopup())
     .catch(error)
     .finally(() => editAvaForm.renderLoading("Сохранить"));
 });

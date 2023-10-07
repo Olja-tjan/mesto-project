@@ -64,6 +64,7 @@ export class Card {
 
   handleRemoveCard() {
     this._cardElement.remove();
+    this._cardElement = null;
   }
 
 
